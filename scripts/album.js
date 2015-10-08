@@ -52,7 +52,7 @@ var albumJourney = {
 var createSongRow = function (songNumber, songName, songLength) {
 	var template = 
 		  '<tr class="album-view-song-item">'
-		+ ' <td class="song-item-number data-song-number="' + songNumber + '">' + songNumber + '</td>'
+		+ ' <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
 		+ '	<td class="song-item-title">' + songName + '</td>'
 		+ '	<td class="song-item-duration">' + songLength + '</td>'
 		+ '</tr>';
@@ -103,15 +103,11 @@ window.onload = function() {
 		}
 	});
 	
-	// This code not working? Not sure where it goes
 	for (i = 0; i < songRows.length; i++) {
 		songRows[i].addEventListener('mouseleave', function(event) {
 			this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
 		});
 	}
-	
-	// End 
-	
 	
 	var albums = [albumPicasso, albumMarconi, albumJourney];
 	var index = 1;
