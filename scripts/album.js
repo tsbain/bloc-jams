@@ -141,7 +141,7 @@ var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
 			
 // Store state of playing songs
-var currentlyPlayingSong= null;
+var currentlyPlayingSong = null;
 
 window.onload = function() {
 	
