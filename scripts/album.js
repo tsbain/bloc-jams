@@ -116,17 +116,17 @@ var clickHandler = function(targetElement) {
 
 	var songItem = getSongItem(targetElement);
 
-	if (currentPlayingSong === null) {
+	if (currentlyPlayingSong === null) {
 		songItem.innerHTML = pauseButtonTemplate;
-		currentPlayingSong = songItem.getAttribute('data-song-number');
-	} else if (currentPlayingSong === songItem.getAttribute('data-song-number')) {
+		currentlyPlayingSong = songItem.getAttribute('data-song-number');
+	} else if (currentlyPlayingSong === songItem.getAttribute('data-song-number')) {
 		songItem.innerHTML = playButtonTemplate;
-		currentPlayingSong = null;
-	} else if (currentPlayingSong!== songItem.getAttribute('data-song-number')) {
+		currentlyPlayingSong = null;
+	} else if (currentlyPlayingSong !== songItem.getAttribute('data-song-number')) {
 		var currentlyPlayingSongElement = document.querySelector('[data-song-number="' + currentPlayingSong + '"]');
 		currentlyPlayingSongElement.innerHTML = currentlyPlayingSongElement.getAttribute('data-song-number');
 		songItem.innerHTML = pauseButtonTemplate;
-		currentPlayingSong = songItem.getAttribute('data-song-number');
+		currentlyPlayingSong = songItem.getAttribute('data-song-number');
 	}
 
 };
@@ -141,7 +141,7 @@ var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
 			
 // Store state of playing songs
-var currentPlayingSong= null;
+var currentlyPlayingSong= null;
 
 window.onload = function() {
 	
@@ -153,7 +153,7 @@ window.onload = function() {
 			event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
 			var songItem = getSongItem(event.target);
 			
-			if (songItem.getAttribute('data-song-number') !== currentPlayingSong) {
+			if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {
 				songItem.innerHTML = playButtonTemplate;
 			}
 		}
@@ -164,7 +164,7 @@ window.onload = function() {
 			var songItem = getSongItem(event.target);
 			var songItemNumber = songItem.getAttribute('data-song-number');
 			
-			if (songItemNumber !== currentPlayingSong) {
+			if (songItemNumber !== currentlyPlayingSong) {
 				songItem.innerHTML = songItemNumber;
 			}
 		});
