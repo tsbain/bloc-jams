@@ -153,7 +153,7 @@ window.onload = function() {
 			event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
 			var songItem = getSongItem(event.target);
 			
-			if (songItem.getAttribute('data-song-number') !== currentPlayingSong) {
+			if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {
 				songItem.innerHTML = playButtonTemplate;
 			}
 		}
@@ -164,7 +164,7 @@ window.onload = function() {
 			var songItem = getSongItem(event.target);
 			var songItemNumber = songItem.getAttribute('data-song-number');
 			
-			if (songItemNumber !== currentPlayingSong) {
+			if (songItemNumber !== currentlyPlayingSong) {
 				songItem.innerHTML = songItemNumber;
 			}
 		});
