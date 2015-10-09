@@ -87,10 +87,20 @@ var setCurrentAlbum = function(album) {
 // Change song number to the pause button #1
 var findParentByClassName = function(element, targetClass) {
 	var currentParent = element.parentElement;
-	while (currentParent.className != targetClass) {
+	
+	if (currentParent) {
+		while (currentParent.className && currentParent.className != targetClass) {
 		currentParent = currentParent.parentElement;
+		}
+		
+		if (currentParent.className == targetClass) {
+			return currentParent;		
+		} else {
+			alert("No parent with that class name found.");
+		}
+	} else {
+		alert("No parent found.");
 	}
-	return currentParent;
 };
 
 // Change song number to the pause button #2
