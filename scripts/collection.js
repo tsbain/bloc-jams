@@ -12,7 +12,8 @@ var buildCollectionItemTemplate = function() {
     + '    <br/>'
     + '  </p>'
     + ' </div>'
-    + '</div>';
+    + '</div>'
+    ;
 
     return $(template);
 };    
