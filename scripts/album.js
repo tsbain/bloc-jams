@@ -36,7 +36,7 @@ var clickHandler = function() {
 };
 
 var onHover = function(event) {
-    var songNumberCell = parseInt($(this).find('.song-item-number'));
+    var songNumberCell = $(this).find('.song-item-number');
     var songNumber = parseInt(songNumberCell.attr('data-song-number'));
 
     if (songNumber !== currentlyPlayingSongNumber) {
@@ -45,7 +45,7 @@ var onHover = function(event) {
 };
 
 var offHover = function(event) {
-    var songNumberCell = parseInt($(this).find('.song-item-number'));
+    var songNumberCell = $(this).find('.song-item-number');
     var songNumber = parseInt(songNumberCell.attr('data-song-number'));
 
     if (songNumber !== currentlyPlayingSongNumber) {
@@ -107,7 +107,8 @@ $(document).ready(function() {
 	
     var albums = [albumPicasso, albumMarconi, albumJourney];
     var index = 1;
-    albumImage.addEventListener('click', function(event) {
+    $albumImage.on('click', function(event) {
+        console.log('got here');
         setCurrentAlbum(albums[index]);
         index++;
         if (index == albums.length) {
