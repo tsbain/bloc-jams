@@ -1,3 +1,12 @@
+var setSong = function(songNumber) {
+    currentlyPlayingSongNumber = parseInt(songNumber);
+    currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+};
+
+var getSongNumberCell = function(number) {
+  return $('.song-item-number[data-song-number="' + number + '"]');  
+};
+
 var createSongRow = function (songNumber, songName, songLength) {
 	var template = 
 		  '<tr class="album-view-song-item">'
@@ -18,13 +27,13 @@ var clickHandler = function() {
     var songNumber = parseInt($(this).attr('data-song-number'));
 
     if (currentlyPlayingSongNumber !== null) {
-        var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
+        var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
         currentlyPlayingCell.html(currentlyPlayingSongNumber);
     }
      if (currentlyPlayingSongNumber !== songNumber) {
         $(this).html(pauseButtonTemplate);
-        currentlyPlayingSongNumber = songNumber;
-        currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+        setSong(songNumber);
+        //setSong(currentAlbum.songs[songNumber - 1]);
         updatePlayerBarSong();
     } else if (currentlyPlayingSongNumber === songNumber) {
         // Switch from Pause -> Play button to pause currently playing song
@@ -50,7 +59,7 @@ var offHover = function(event) {
 
     if (songNumber !== currentlyPlayingSongNumber) {
         songNumberCell.html(songNumber);
-    }        
+    } 
 };
 
 // Select elements that we want to populate with text dynamically
@@ -96,7 +105,6 @@ var playerBarPauseButton = '<span class="ion-pause"></span>';
 var currentAlbum = null;
 var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
-
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
 
@@ -108,7 +116,6 @@ $(document).ready(function() {
     var albums = [albumPicasso, albumMarconi, albumJourney];
     var index = 1;
     $albumImage.on('click', function(event) {
-        console.log('got here');
         setCurrentAlbum(albums[index]);
         index++;
         if (index == albums.length) {
@@ -119,12 +126,11 @@ $(document).ready(function() {
 
 var nextSong = function() {
     
-    var getLastSongNumber = parseInt(function(index) {
+    var getLastSongNumber = function(index) {
         return index == 0 ? currentAlbum.songs.length : index;
-    });
+    };
     
     var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
-    // Note that we're _incrementing_ the song here
     currentSongIndex++;
     
     if (currentSongIndex >= currentAlbum.songs.length) {
@@ -132,18 +138,17 @@ var nextSong = function() {
     }
     
     // Set a new current song
-    currentlyPlayingSongNumber = currentSongIndex + 1;
-    currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
-
+    setSong(currentSongIndex + 1);
+    
     // Update the Player Bar information
     $('.currently-playing .song-name').text(currentSongFromAlbum.name);
     $('.currently-playing .artist-name').text(currentAlbum.artist);
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.name + " - " + currentAlbum.name);
     $('.main-controls .play-pause').html(playerBarPauseButton);
     
-    var lastSongNumber = parseInt(getLastSongNumber(currentSongIndex));
-    var $nextSongNumberCell = parseInt($('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]'));
-    var $lastSongNumberCell = parseInt($('.song-item-number[data-song-number="' + lastSongNumber + '"]'));
+    var lastSongNumber = getLastSongNumber(currentSongIndex);
+    var $nextSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    var $lastSongNumberCell = getSongNumberCell(lastSongNumber);
     
     $nextSongNumberCell.html(pauseButtonTemplate);
     $lastSongNumberCell.html(lastSongNumber);
@@ -152,14 +157,11 @@ var nextSong = function() {
 
 var previousSong = function() {
     
-    // Note the difference between this implementation and the one in
-    // nextSong()
-    var getLastSongNumber = parseInt(function(index) {
+    var getLastSongNumber = function(index) {
         return index == (currentAlbum.songs.length - 1) ? 1 : index + 2;
-    });
+    };
     
     var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
-    // Note that we're decrementing the index here
     currentSongIndex--;
     
     if (currentSongIndex < 0) {
@@ -167,18 +169,17 @@ var previousSong = function() {
     }
     
     // Set a new current song
-    currentlyPlayingSongNumber = currentSongIndex + 1;
-    currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
-
+   setSong(currentSongIndex + 1);
+   
     // Update the Player Bar information
     $('.currently-playing .song-name').text(currentSongFromAlbum.name);
     $('.currently-playing .artist-name').text(currentAlbum.artist);
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.name + " - " + currentAlbum.name);
     $('.main-controls .play-pause').html(playerBarPauseButton);
     
-    var lastSongNumber = parseInt(getLastSongNumber(currentSongIndex));
-    var $previousSongNumberCell = parseInt($('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]'));
-    var $lastSongNumberCell = parseInt($('.song-item-number[data-song-number="' + lastSongNumber + '"]'));
+    var lastSongNumber = getLastSongNumber(currentSongIndex);
+    var $previousSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    var $lastSongNumberCell = getSongNumberCell(lastSongNumber);
     
     $previousSongNumberCell.html(pauseButtonTemplate);
     $lastSongNumberCell.html(lastSongNumber);
