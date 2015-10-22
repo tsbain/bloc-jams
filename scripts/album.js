@@ -123,6 +123,18 @@ var updatePlayerBarSong = function() {
     $('.main-controls .play-pause').html(playerBarPauseButton);
 };
 
+var togglePlayFromPlayerBar = function() {
+    if (currentSoundFile.isPaused()) {
+        getSongNumberCell(currentlyPlayingSongNumber).html(pauseButtonTemplate);
+        $playPauseButton.html(playerBarPauseButton);
+        currentSoundFile.play();
+    } else if (currentSoundFile) {
+        getSongNumberCell(currentlyPlayingSongNumber).html(playButtonTemplate);
+        $(this).html(playerBarPlayButton);
+        currentSoundFile.pause();
+    }        
+};
+
 // Album button templates
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
@@ -135,23 +147,27 @@ var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
 var currentSoundFile = null;
 var currentVolume = 80;
+
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
+var $playPauseButton = $('.main-controls .play-pause');
 
 $(document).ready(function() {	
 	setCurrentAlbum(albumPicasso);
     $previousButton.click(previousSong);
     $nextButton.click(nextSong);
+    $playPauseButton.click(togglePlayFromPlayerBar);
+});
 	
-    var albums = [albumPicasso, albumMarconi, albumJourney];
-    var index = 1;
-    $albumImage.on('click', function(event) {
-        setCurrentAlbum(albums[index]);
-        index++;
-        if (index == albums.length) {
-            index = 0;
-        }
-    });
+var albums = [albumPicasso, albumMarconi, albumJourney];
+var index = 1;
+
+$albumImage.on('click', function(event) {
+    setCurrentAlbum(albums[index]);
+    index++;
+    if (index == albums.length) {
+        index = 0;
+    }
 });
 
 var nextSong = function() {
