@@ -119,12 +119,13 @@ seek-control .total-time {
     margin-top: -0.25rem;
     border-radius: 50%;
     cursor: pointer;
-    -webkit-transition: all 100ms ease-in-out;
-       -moz-transition: all 100ms ease-in-out;
-            transition: all 100ms ease-in-out;
+    transition: width 100ms ease-in-out,
+                height 100ms ease-in-out,
+                margin-top 100ms ease-in-out,
+                margin-left 100ms ease-in-out;
 }
 
-.seek-bar:hover .thumb{
+.seek-bar:hover .thumb {
     width: 1.1rem;
     height: 1.1rem;
     margin-top: -0.5rem;
@@ -144,7 +145,7 @@ seek-control .total-time {
 
 .player-bar .volume .seek-bar {
     display: inline-block;
-    width; 5.75rem;
+    width: 5.75rem;
     vertical-align: middle;
 }
 
