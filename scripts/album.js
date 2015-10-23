@@ -47,7 +47,6 @@ var clickHandler = function() {
         // Revert to song number for currently playing song because user started playing new song.
         var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
         
-        //next line is new
         currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
         currentlyPlayingCell.html(currentlyPlayingSongNumber);
     }
@@ -56,7 +55,6 @@ var clickHandler = function() {
         setSong(songNumber);
         currentSoundFile.play();
         $(this).html(pauseButtonTemplate);
-        //next line is new
         currentSongFromAlbum = currentAlbum.songs[songNumber -1];        
         updatePlayerBarSong();
     } else if (currentlyPlayingSongNumber === songNumber) {
@@ -64,6 +62,7 @@ var clickHandler = function() {
             $(this).html(pauseButtonTemplate);
             $('.main-controls .play-pause').html(playerBarPauseButton);
             currentSoundFile.play();
+            updateSeekBarWhileSongPlays();
         } else {
             $(this).html(playButtonTemplate);
             $('.main-controls .play-pause').html(playerBarPlayButton);
@@ -110,6 +109,17 @@ var setCurrentAlbum = function(album) {
 		var $newRow = createSongRow(i + 1, album.songs[i].name, album.songs[i].length);
         $albumSongList.append($newRow);
 	}
+};
+
+var updateSeekBarWhileSongPlays = function() {
+    if (currentSoundFile) {
+        currentSoundFile.bind('timeupdate', function(event) {
+            var seekBarFillRatio = this.getTime() / this.getDuration();
+            var $seekBar = $('.seek-control .seek-bar');
+            
+            updateSeekPercentage($seekBar, seekBarFillRatio);
+        });
+    }
 };
 
 var updateSeekPercentage = function($seekBar, seekBarFillRatio) {
@@ -226,7 +236,7 @@ var nextSong = function() {
     // Set a new current song
     setSong(currentSongIndex + 1);
     currentSoundFile.play();
-    //next line is new
+    updateSeekBarWhileSongPlays();
     updatePlayerBarSong();
     
     // Update the Player Bar information
@@ -260,7 +270,7 @@ var previousSong = function() {
     // Set a new current song
    setSong(currentSongIndex + 1);
     currentSoundFile.play();
-    //next line is new
+    updateSeekBarWhileSongPlays();
     updatePlayerBarSong();
    
     // Update the Player Bar information
