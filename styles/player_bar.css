@@ -49,7 +49,7 @@
 
 .player-bar .currently-playing {
     width: 50%;
-    text-align: center;
+    text-align: right;
     position: relative;
 }
 
